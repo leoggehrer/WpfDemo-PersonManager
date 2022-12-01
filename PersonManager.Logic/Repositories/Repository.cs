@@ -36,7 +36,7 @@ namespace PersonManager.Logic.Repositories
         }
         public bool Update(TModel model)
         {
-            var listModel = GetById(model.Id);
+            var listModel = modelList.FirstOrDefault(m => m.Id == model.Id);
 
             if (listModel != null)
             {
@@ -48,7 +48,7 @@ namespace PersonManager.Logic.Repositories
 
         public void Delete(int id)
         {
-            var model = GetById(id);
+            var model = modelList.FirstOrDefault(m => m.Id == id);
 
             if (model != null)
             {

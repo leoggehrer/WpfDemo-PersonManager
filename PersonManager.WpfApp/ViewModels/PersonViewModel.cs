@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PersonManager.WpfApp.ViewModels
@@ -12,7 +8,19 @@ namespace PersonManager.WpfApp.ViewModels
         private ICommand? saveCommand = null;
         private ICommand? closeCommand = null;
         private Logic.Repositories.PersonalRepository Repository { get; } = new();
-        private Logic.Models.Person Model { get; set; } = new();
+
+        private Logic.Models.Person model = new();
+        public Logic.Models.Person Model 
+        {
+            get => model;
+            set
+            {
+                model = value;
+                OnPropertyChanged(nameof(Firstname));
+                OnPropertyChanged(nameof(Lastname));
+                OnPropertyChanged(nameof(FullName));
+            }
+        }
 
         public Action? CloseWindow { get; set; }
         public ICommand SaveCommand 
@@ -55,7 +63,16 @@ namespace PersonManager.WpfApp.ViewModels
 
         public void Save()
         {
-
+            if (Model.Id == 0)
+            {
+                Repository.Add(Model);
+            }
+            else
+            {
+                Repository.Update(Model);
+            }
+            Repository.Save();
+            Close();
         }
         public void Close()
         {

@@ -21,9 +21,20 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="20"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Grid.Row ="0" Grid.Column="1" Width="100" Margin="10" HorizontalAlignment="Right" Command="{Binding Path=AddCommand}">Add</Button>
-        
-        <DataGrid Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Path=Models}" AutoGenerateColumns="False" >
+
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBox Width="300" Margin="10 10 100 10" Text="{Binding Path=SearchText, UpdateSourceTrigger=PropertyChanged}" ></TextBox>
+            <Button Width="100" Margin="10" Command="{Binding Path=DeleteCommand}" BorderBrush="Red" Background="WhiteSmoke">Delete</Button>
+            <Button Width="100" Margin="10" Command="{Binding Path=EditCommand}">Edit</Button>
+            <Button Width="100" Margin="10" Command="{Binding Path=AddCommand}">Add</Button>
+        </StackPanel>
+
+        <DataGrid Grid.Row="1" Grid.Column="1" 
+                  ItemsSource="{Binding Path=Models}" 
+                  AutoGenerateColumns="False" 
+                  SelectionMode="Single"
+                  CanUserAddRows="False"
+                  SelectedItem="{Binding Path=SelectedItem}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="First Name" Binding="{Binding Path=Firstname}"/>
                 <DataGridTextColumn Header="Last Name" Binding="{Binding Path=Lastname}" />
